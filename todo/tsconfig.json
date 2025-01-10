@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "jsx": "react-jsx",           
+    "target": "es5",              
+    "lib": ["dom", "esnext"],     
+    "moduleResolution": "node",   
+    "strict": true,               
+    "module": "esnext",           
+    "esModuleInterop": true       
+  },
+  "include": ["src/**/*", "postcss.config.js"],        
+  "exclude": ["node_modules"],    
+}
