@@ -1,11 +1,12 @@
 import React, {useState} from 'react';
-import { todo, todoSelector } from '../types/interface';
-import { useDispatch, useSelector} from 'react-redux';
+import { todo } from '../types/interface';
+import { useDispatch} from 'react-redux';
 import {addTodo} from "../slices/todoSlice"
 
 const TodoForm :React.FC<{}> = () => {
 
     const [todo, setTodo] = useState<todo>({
+        id:0,
         title:"",
         status:"",
         group:[]
@@ -15,24 +16,21 @@ const TodoForm :React.FC<{}> = () => {
     const groupOptions :string[] = ["Grocery", "Office", "Bills", "Extra", "Study", "Health"]
 
     const onSubmit = () => {
-        dispatch(addTodo(todo))
-        setTodo({        
+        let genID = Math.floor(Math.random()*1000)
+        const updatedTodo = {...todo, id:genID}
+        dispatch(addTodo(updatedTodo))
+        setTodo({      
+            id:0,
             title:"",
             status:"",
             group:[]})
     }
-
-    const todoData = useSelector((state :todoSelector ) => state.todo.todo)
-
-    console.log(todoData, "todoData")
-    console.log(todo, "todo")
 
     const handleTitleChange = (event : React.ChangeEvent<HTMLInputElement>) => {
         setTodo({...todo, title:event?.target.value})
     }
 
     const handleStatusChange : React.ChangeEventHandler<HTMLSelectElement>= (event) => {
-        console.log(event)
         setTodo({...todo, status : event.target.value})
     }
 
@@ -44,7 +42,6 @@ const TodoForm :React.FC<{}> = () => {
             return({...prevState, group : updatedTodo})
         })
     }
-    console.log(todo, "todo")
 
   return (
     <div className="flex justify-center flex-col items-center p-4 bg-blue-500">
@@ -61,7 +58,6 @@ const TodoForm :React.FC<{}> = () => {
         <div className='w-3/5 flex'>
             <div className='w-4/5 flex flex-wrap'>
                 {groupOptions.map((item) => (
-                    console.log(item, "item"),
                     <button 
                         key={item}
                         className={`px-1 m-1 hover:bg-gray-300 rounded-lg transition duration-200 ${todo.group.includes(item) ? 'bg-orange-300' : 'bg-gray-200'}`}
@@ -84,7 +80,7 @@ const TodoForm :React.FC<{}> = () => {
             </div>
         </div>
         <div className='w-2/5 flex my-2 justify-center bg-gray-200 rounded-md hover:bg-gray-300'>
-            <button onClick={() => onSubmit()}>Add Trask</button>
+            <button onClick={() => onSubmit()}>Add Task</button>
         </div>
     </div>
   );

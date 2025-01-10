@@ -10,8 +10,8 @@ const TodoItem:React.FC<TodoItemProps> = ({todos}) => {
 
     return(
         <div className='flex'>
-            {todos.map((item, index) => (
-                <div className='bg-yellow-100 p-2 w-max rounded-lg text-sm m-1' key={index}>
+            {todos.map((item) => (
+                <div className='bg-yellow-100 p-2 w-max rounded-lg text-sm m-1' key={item.id}>
                     <h4 className='flex justify-center my-1 font-medium'>{item.title}</h4>
                     <h4 className='flex justify-center my-1'>{item.status}</h4>
                     <div className="flex flex-wrap gap-2">
@@ -25,7 +25,9 @@ const TodoItem:React.FC<TodoItemProps> = ({todos}) => {
                         ))}
                     </div>
                     <div className='flex w-full my-2 justify-center '>    
-                    <button className='bg-white text-red-600 hover:text-red-800 ' onClick={() => dispatch(deleteTodo(index))}> <FaTrash /></button>
+                    <button className='bg-white text-red-600 hover:text-red-800 ' 
+                        onClick={() => dispatch(deleteTodo(item.id))}> <FaTrash />
+                    </button>
                     </div>
                 </div>
             ))}

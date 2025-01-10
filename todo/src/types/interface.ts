@@ -1,4 +1,5 @@
 export interface todo {
+    id:number,
     title:string,
     status: string,
     group:string[]

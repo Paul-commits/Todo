@@ -17,7 +17,6 @@ const TodoList: React.FC<{}> = () => {
         filterTodos()
     }, [todoList])
 
-    console.log(todoList, "selector 10")
 
     const filterTodos = () => {
         let toStartTodo = todoList.filter((item) => item.status === "Todo");
@@ -31,27 +30,39 @@ const TodoList: React.FC<{}> = () => {
         })
     }   
 
-    console.log(todoByCategory, "todoByCategory")
-
     return(
-        <div className='flex w-full flex-col justify-center items-center p-4'>
-            <h2 className='text-xl font-bold'>Todo List</h2>
-            <div className='flex w-full justify-between space-x-6 my-2'>
-                <div className='w-1/3 bg-gray-200 rounded-lg'>
-                    <h2 className='text-lg font-semibold mb-4 flex justify-center'>To Do</h2>
-                    <TodoItem todos={todoByCategory.toStart}/>
-                </div>
-                <div className='w-1/3 bg-gray-200 rounded-lg'>
-                    <h2 className='flex justify-center text-lg font-semibold mb-4'>In Progress</h2>
-                    <TodoItem todos={todoByCategory.inProgress} />
-                </div>
-                <div className='w-1/3 bg-gray-200 rounded-lg'>
-                    <h2 className='flex justify-center text-lg font-semibold mb-4'>Done</h2>
-                    <TodoItem todos={todoByCategory.done}/>
-                </div>
-            </div>
-            </div>
-    )
+            <>
+                {todoList && todoList.length > 0 && 
+                    <div className='flex w-full flex-col justify-center items-center p-4'>
+                        <h2 className='text-xl font-bold'>Todo List</h2>
+                        <div className='flex w-full justify-between space-x-6 my-2'>
+                            {todoByCategory.toStart.length > 0 && 
+                            <div className={`bg-gray-200 rounded-lg ${todoByCategory.inProgress.length ===0 && todoByCategory.done.length ===0 ? 'w-full' : 
+                                (todoByCategory.inProgress.length !==0 || todoByCategory.done.length !==0) ? 'w-1/2' : 'w-1/2'}`}>
+                                <h2 className='text-lg font-semibold mb-4 flex justify-center'>To Do</h2>
+                                <TodoItem todos={todoByCategory.toStart}/>
+                            </div>
+                            }
+                            {todoByCategory.inProgress.length > 0 && 
+                            <div className={`bg-gray-200 rounded-lg ${todoByCategory.inProgress.length ===0 && todoByCategory.done.length ===0 ? 'w-full' : 
+                                (todoByCategory.inProgress.length !==0 || todoByCategory.done.length !==0) ? 'w-1/2' : 'w-1/2'}`}>
+                                <h2 className='flex justify-center text-lg font-semibold mb-4'>In Progress</h2>
+                                <TodoItem todos={todoByCategory.inProgress} />
+                            </div>
+                            }
+                            {todoByCategory.done.length > 0 &&
+                            <div className={`bg-gray-200 rounded-lg ${todoByCategory.inProgress.length ===0 && todoByCategory.done.length ===0 ? 'w-full' : 
+                                (todoByCategory.inProgress.length !==0 || todoByCategory.done.length !==0) ? 'w-1/2' : 'w-1/2'}`}>
+                                <h2 className='flex justify-center text-lg font-semibold mb-4'>Done</h2>
+                                <TodoItem todos={todoByCategory.done}/>
+                            </div>
+                            }
+                         </div>
+                    </div>
+                }
+            </>
+
+            )
 }
 
 export default TodoList

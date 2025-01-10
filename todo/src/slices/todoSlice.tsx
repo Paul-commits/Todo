@@ -9,14 +9,12 @@ const todoSlice = createSlice({
     name:"todo",
     initialState,
     reducers:{
-        addTodo :(state, action: PayloadAction<todo>) => {
+        addTodo :(state, action: PayloadAction<todo>) => {  
             state.todo.push(action.payload);
         },
         deleteTodo: (state, action: PayloadAction<number>) => {
-            const index = action.payload; 
-            if (index !== undefined && index >= 0 && index < state.todo.length) {
-              state.todo.splice(index, 1);
-            }
+            const filteredTodo = state.todo.filter((item) => item.id !== action.payload);
+            state.todo = filteredTodo;
         }
     }
 })
